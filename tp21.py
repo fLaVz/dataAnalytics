@@ -61,6 +61,7 @@ lst_classif_names = ['Dummy', 'Naive Bayes', 'Decision tree', 'Logistic regressi
 
 # Question 3
 #tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
+
 # Question 4
 
 categorical_columns = ['cost-of-living-adjustment',
@@ -72,13 +73,15 @@ categorical_columns = ['cost-of-living-adjustment',
                      'bereavement-assistance',
                      'contribution-to-health-plan']
 
-freq = SimpleImputer(missing_values=b'?', strategy='most_frequent')
-df[categorical_columns] = freq.fit_transform(df[categorical_columns])
+freq = SimpleImputer(missing_values='?', strategy='most_frequent')
+df_cat = pd.DataFrame(freq.fit_transform(df[categorical_columns]))
 #print(df)
-df_dummies = pd.get_dummies(df, columns=categorical_columns)
-print(df_dummies)
+print(df_cat.columns)
+df_dummies = pd.get_dummies(df_cat)
+
 X = df_dummies
-y = df_dummies['class']
+y = df['class']
 
 tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
+tp21func.confusion_matrix(lst_classif, lst_classif_names, X, y)
 
