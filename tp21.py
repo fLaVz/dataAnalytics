@@ -44,10 +44,10 @@ numeric_columns = ['duration',
           'statutory-holidays']
 
 mean = SimpleImputer(missing_values=np.nan, strategy='mean')
-df[numeric_columns] = mean.fit_transform(df[numeric_columns])
-df[numeric_columns] = StandardScaler().fit_transform(df[numeric_columns])
+df_num = pd.DataFrame(mean.fit_transform(df[numeric_columns]))
+df_num = StandardScaler().fit_transform(df_num)
 
-X = df[numeric_columns]
+X = df_num
 y = df['class']
 
 dummycl = DummyClassifier(strategy="most_frequent")
@@ -60,7 +60,8 @@ lst_classif = [dummycl, gmb, dectree, logreg, svc]
 lst_classif_names = ['Dummy', 'Naive Bayes', 'Decision tree', 'Logistic regression', 'SVM']
 
 # Question 3
-#tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
+tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
+tp21func.confusion_matrix(lst_classif, lst_classif_names, X, y)
 
 # Question 4
 
@@ -84,4 +85,7 @@ y = df['class']
 
 tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
 tp21func.confusion_matrix(lst_classif, lst_classif_names, X, y)
+
+
+
 

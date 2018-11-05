@@ -13,7 +13,7 @@ import numpy as np
 
 
 
-euro = pd.read_csv('eurostat-2013.csv')
+euro = pd.read_csv('eurostat-2013.csv', encoding='utf-8')
 
 """ 
 Question 1
@@ -25,7 +25,7 @@ Question 1
 
 euro['tsc00004 (2012)'] /= euro['tps00001 (2013)']
 euro['tet00002 (2013)'] /= euro['tps00001 (2013)']
-euroClean = euro.drop(['tps00001 (2013)'], axis = 1)
+euroClean = pd.DataFrame(euro.drop(['tps00001 (2013)'], axis = 1))
 
 print (euroClean)
 
@@ -156,7 +156,35 @@ plt.plot(lst_k,lst_rsq,'bx-')
 plt.xlabel('k')
 plt.ylabel('RSQ')
 plt.title('The Elbow Method showing the optimal k')
+plt.savefig('R2')
 plt.show()
 plt.close()
 print('--------------------------------------------------------------------------')
 print('--------------------------------------------------------------------------')
+
+
+# Question 6
+
+
+# Question 7
+lst_labels = map(lambda pair:pair[0]+str(pair[1]),
+                 zip(euroClean['Nom'].values, euroClean.index))
+
+print(euroClean['Nom'].values)
+
+# print(len(lst_labels))
+# list(map(print,lst_labels))
+linkage_matrix = linkage(eurofit, 'ward')
+#print(lst_labels)
+#print(list(lst_labels))
+#print(len(list(lst_labels)))
+#print(len(linkage_matrix))
+fig = plt.figure()
+dendrogram(linkage_matrix, color_threshold=0, labels=list(lst_labels))
+plt.title('Hierarchical Clustering Dendrogram (Ward)')
+plt.xlabel('sample index')
+plt.ylabel('distance')
+plt.tight_layout()
+plt.savefig('dendrogram')
+plt.show()
+plt.close()
