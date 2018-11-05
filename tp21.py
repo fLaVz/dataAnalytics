@@ -62,6 +62,21 @@ lst_classif_names = ['Dummy', 'Naive Bayes', 'Decision tree', 'Logistic regressi
 # Question 3
 tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
 # Question 4
-freq = SimpleImputer(missing_values=np.nan, strategy='most_frequent')
 
+categorical_columns = ['cost-of-living-adjustment',
+                     'pension',
+                     'education-allowance',
+                     'vacation',
+                     'longterm-disability-assistance',
+                     'contribution-to-dental-plan',
+                     'bereavement-assistance',
+                     'contribution-to-health-plan',
+                     'class']
 
+freq = SimpleImputer(missing_values=b'?', strategy='most_frequent')
+df[categorical_columns] = freq.fit_transform(df[categorical_columns])
+#print(df)
+df_dummies = pd.get_dummies(df, columns=categorical_columns)
+print(df_dummies)
+
+tp21func.accuracy_score(lst_classif, lst_classif_names, X, y)
